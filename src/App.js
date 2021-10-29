@@ -1,53 +1,48 @@
 import "./styles.css";
+import { useState } from "react";
+import { bookArray } from "./Book";
 
-const bookArray = [
-  {
-    img: "https://m.media-amazon.com/images/I/81cpDaCJJCL._AC_UL480_QL65_.jpg",
-    title: "Psychology of money",
-    author: "Morgan Housel"
-  },
-  {
-    img: "https://m.media-amazon.com/images/I/81l3rZK4lnL._AC_UL480_QL65_.jpg",
-    title: "Ikigai",
-    author: " Héctor García and Francesc Miralles"
-  },
-  {
-    img: "https://m.media-amazon.com/images/I/91bYsX41DVL._AC_UL480_QL65_.jpg",
-    title: "Atomic Habits",
-    author: " James Clear"
-  },
-  {
-    img: "https://m.media-amazon.com/images/I/71aFt4+OTOL._AC_UL480_QL65_.jpg",
-    title: "The Alchemist",
-    author: "Paulo Coelho"
-  },
-  {
-    img: "https://m.media-amazon.com/images/I/710jnzKlDTL._AC_UL480_QL65_.jpg",
-    title: "Attitude is Everything",
-    author: " Jeff Keller"
-  },
-  {
-    img: "https://m.media-amazon.com/images/I/81tEgsxpNZS._AC_UL480_QL65_.jpg",
-    title: "As a man thinketh",
-    author: " James Allen"
-  }
-];
-
-const Book = (props) => {
-  return (
-    <div className="card">
-      <img className="image-display" src={props.img} alt="book" />
-      <h2>{props.title}</h2>
-      <p>{props.author}</p>
-    </div>
-  );
-};
 export default function App() {
+  const [bookdisplay, setBookdisplay] = useState(bookArray["allBooks"]);
+  const Book = (props) => {
+    return (
+      <div className="card">
+        <img className="image-display" src={props.img} alt="book" />
+        <h2>{props.title}</h2>
+        <p>{props.author}</p>
+      </div>
+    );
+  };
+
+  const callHandler = (props) => {
+    setBookdisplay(bookArray[props]);
+  };
+
   return (
     <div>
-      {bookArray.map((bk) => {
-        return <Book img={bk.img} title={bk.title} author={bk.author} />;
-      })}
+      <div className="nav">
+        <h1> Book Library </h1>
+        <ul>
+          <li className="list" onClick={() => callHandler("allBooks")}>
+            All Books
+          </li>
+          <li className="list" onClick={() => callHandler("fiction")}>
+            Fiction
+          </li>
+          <li className="list" onClick={() => callHandler("selfHelp")}>
+            Self Help
+          </li>
+          <li className="list" onClick={() => callHandler("mystery")}>
+            Mystery
+          </li>
+        </ul>
+      </div>
+
+      <div className="container">
+        {bookdisplay.map((bk) => {
+          return <Book img={bk.img} title={bk.title} author={bk.author} />;
+        })}
+      </div>
     </div>
   );
 }
